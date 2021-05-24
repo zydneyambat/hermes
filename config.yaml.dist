@@ -1,0 +1,10 @@
+config:
+  slack_webhook_url: <YOUR SLACK INCOMING WEBHOOK URL> (required)
+  refresh_interval: <5 seconds as default> (optional)
+
+accounts:
+  # Make sure to sign in using app password (https://support.google.com/mail/answer/185833?hl=en)
+  - email: <your email address> (required)
+    password: <your email password> (required)
+  - email: <your email address> (required)
+    password: <your email password> (required)
