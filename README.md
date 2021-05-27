@@ -5,8 +5,6 @@
 
 Hermes is a simple slack notification tool that watches for unseen messages on multiple emails!
 
-## Architecture
-
 ## Requirements
 
 Hermes is written in <a href="https://www.python.org/downloads/release/python-390/" target="_blank">Python3.9</a> and uses <a href="https://api.slack.com/messaging/webhooks" target="_blank">Slack Incoming Webhook</a>.
@@ -57,7 +55,13 @@ make
 
 The `make` command build the image, configure dependencies and install the application.
 
-*Obs:* You can simply run `make` or `make help` for a list of all available commands.
+When the command is finished you can now watch your email inbox by running the command below:
+
+```
+make run ./config.yaml
+```
+
+*Note:* You can simply run `make` or `make help` for a list of all available commands.
  
 # Running tests
 

@@ -44,31 +44,30 @@ class TestGoogle:
         assert imap.close.is_called_once()
         assert imap.logout.is_called_once()
 
-    # @patch('hermes.lib.email.sleep')
-    # @patch('hermes.lib.email.Slack')
-    # def test_watch(self, slack, sleep, imap):
-    #     imap.search.return_value = ('OK', [b'1'])
-    #     imap.fetch.return_value = ('OK', [
-    #          (b'8 (RFC822 {7290}',
-    #           b'From: Test Blah <blah@test.com>\r\n'
-    #           b'Date: Thu, 27 May 2021 00:04:38 +1000\r\n'
-    #           b'Subject: Test\r\n'),
-    #          b')'
-    #     ])
-    #     imap.return_value = imap
-    #
-    #     account, config = self.get_email_and_config()
-    #     email = Google(account=account, config=config)
-    #     with patch('hermes.lib.email.Email.is_watching', new=PropertyMock) as is_watching:
-    #         is_watching.side_effect = [True, False]
-    #     email.watch()
-    #
-    #     imap.login.is_called_once()
-    #     imap.select.is_called_once()
-    #     imap.noop.is_called()
-    #     imap.search.is_called()
-    #     slack.post.is_called()
-    #     sleep.is_called()
+    @patch('hermes.lib.email.sleep')
+    @patch('hermes.lib.email.Slack')
+    def test_watch(self, slack, sleep, imap):
+        sleep.side_effect = Exception
+        imap.search.return_value = ('OK', [b'1'])
+        imap.fetch.return_value = ('OK', [
+             (b'8 (RFC822 {7290}',
+              b'From: Test Blah <blah@test.com>\r\n'
+              b'Date: Thu, 27 May 2021 00:04:38 +1000\r\n'
+              b'Subject: Test\r\n'),
+             b')'
+        ])
+        imap.return_value = imap
+
+        account, config = self.get_email_and_config()
+        email = Google(account=account, config=config)
+        email.watch()
+
+        imap.login.is_called_once()
+        imap.select.is_called_once()
+        imap.noop.is_called()
+        imap.search.is_called()
+        slack.post.is_called()
+        sleep.is_called()
 
     @pytest.mark.parametrize('data, expected', [
         ([], None),

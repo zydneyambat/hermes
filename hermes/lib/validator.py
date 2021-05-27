@@ -19,8 +19,10 @@ class FileValidator:
         self.file_name = file_name
 
     def validate(self):
-        if not (os.path.isfile(self.file_name)
-                and self.file_name.endswith(self.SUPPORTED_FORMAT)):
+        if not (
+            os.path.isfile(self.file_name)
+            and self.file_name.endswith(self.SUPPORTED_FORMAT)
+        ):
             raise HermesException('File is not valid!')
 
 

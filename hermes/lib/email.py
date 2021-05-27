@@ -50,14 +50,20 @@ class Email(ABC):
         self.login()
 
         while self.is_watching:
-            messages = self.get_messages()
-            for uid in messages:
-                message = self.parse_message(uid=uid)
-                if message:
-                    self.last_uid = uid
-                    self.slack.post(**message)
+            try:
+                self.send_notification()
+            except Exception:
+                break
 
-            sleep(self.config.refresh_interval)
+    def send_notification(self):
+        messages = self.get_messages()
+        for uid in messages:
+            message = self.parse_message(uid=uid)
+            if message:
+                self.last_uid = uid
+                self.slack.post(**message)
+
+        sleep(self.config.refresh_interval)
 
     def parse_message(self, uid: bytes):
         result, data = self.imap.fetch(uid, '(RFC822)')
@@ -104,7 +110,10 @@ class Email(ABC):
 
     def get_latest_uids(self):
         date_today = datetime.date.today().strftime('%d-%b-%Y')
-        result, messages = self.imap.search(None, '(UNSEEN)', f'(SENTSINCE {date_today})')
+        result, messages = self.imap.search(
+            None,
+            '(UNSEEN)', f'(SENTSINCE {date_today})'
+        )
         uids = messages[0].split()
 
         return uids

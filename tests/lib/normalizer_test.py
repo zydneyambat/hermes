@@ -12,6 +12,17 @@ from hermes.lib.normalizer import Normalizer
 
 class TestNormalizer:
 
+    @patch('hermes.lib.normalizer.safe_load')
+    @patch('builtins.open', new_callable=mock_open)
+    @patch('hermes.lib.normalizer.FileValidator')
+    def test_get_content(self, file_validator, open_mock, safe_load_mock):
+        file_content = {'config': {'slack_webhook_url': 'test'}}
+        safe_load_mock.return_value = file_content
+
+        normalizer = Normalizer(file_name='test.yaml')
+
+        assert normalizer.get_content() == DataModel(**file_content)
+
     @patch('hermes.lib.normalizer.FileValidator')
     def test_validate_file_exists(self, file_validator):
         normalizer = Normalizer(file_name='test.yaml')

@@ -29,6 +29,6 @@ def notify(file):
         spinner = Halo(spinner='dots')
         spinner.fail('Error occured: {}'.format(err))
         exit(1)
-    else:
+    else:  # pragma: no cover
         handler = NotifyHandler(data=data)
         handler.run()
