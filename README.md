@@ -2,6 +2,7 @@
 
 <a href="https://codeclimate.com/github/zydneyambat/hermes/maintainability"><img src="https://api.codeclimate.com/v1/badges/a0bf863579e4a571dde2/maintainability" /></a>
 <a href="https://codeclimate.com/github/zydneyambat/hermes/test_coverage"><img src="https://api.codeclimate.com/v1/badges/a0bf863579e4a571dde2/test_coverage" /></a>
+[![Build](https://github.com/zydneyambat/hermes/actions/workflows/ci.yaml/badge.svg)](https://github.com/zydneyambat/hermes/actions/workflows/ci.yaml)
 
 Hermes is a simple slack notification tool that watches for unseen messages on multiple emails!
 
